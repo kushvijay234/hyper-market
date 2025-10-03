@@ -10,9 +10,11 @@ const Navbar = () => {
   const { user, logout } = useContext(AuthContext);
   const { searchTerm, setSearchTerm } = useContext(SearchContext);
   const [isOpen, setIsOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const quantity = cart.reduce((acc, item) => acc + item.quantity, 0);
 
   const toggleDropdown = () => setIsOpen((prev) => !prev);
+  const toggleMobileMenu = () => setMobileMenuOpen((prev) => !prev);
 
   return (
     <nav className="w-full z-50 bg-teal-800 text-white shadow-md">
@@ -96,7 +98,12 @@ const Navbar = () => {
 
           {/* Mobile Menu Button */}
           <div className="md:hidden">
-            <button type="button" className="text-white focus:outline-none focus:ring-2 focus:ring-white" aria-label="Toggle menu">
+            <button
+              type="button"
+              onClick={toggleMobileMenu}
+              className="text-white focus:outline-none focus:ring-2 focus:ring-white"
+              aria-label="Toggle menu"
+            >
               ☰
             </button>
           </div>
@@ -104,34 +111,36 @@ const Navbar = () => {
       </div>
 
       {/* Mobile Menu */}
-      <div className="md:hidden px-2 pb-3 space-y-2">
-        <Link to="/" className="block px-3 py-2 rounded hover:bg-teal-700">Home</Link>
-        <Link to="/product" className="block px-3 py-2 rounded hover:bg-teal-700">Product</Link>
-        <Link to="/cart" className="block px-3 py-2 rounded hover:bg-teal-700">
-          Cart
-          {quantity > 0 && (
-            <span className="ml-2 bg-red-500 text-white rounded-full px-2 text-xs">
-              {quantity}
-            </span>
-          )}
-        </Link>
-        {user ? (
-          <>
-            <Link to="/account" className="block px-3 py-2 rounded hover:bg-teal-700">Account</Link>
-            {user?.role === "admin" && (
-              <Link to="/admin" className="block px-3 py-2 rounded hover:bg-teal-700">Admin Dashboard</Link>
+      {mobileMenuOpen && (
+        <div className="md:hidden px-2 pb-3 space-y-2">
+          <Link to="/" className="block px-3 py-2 rounded hover:bg-teal-700">Home</Link>
+          <Link to="/product" className="block px-3 py-2 rounded hover:bg-teal-700">Product</Link>
+          <Link to="/cart" className="block px-3 py-2 rounded hover:bg-teal-700">
+            Cart
+            {quantity > 0 && (
+              <span className="ml-2 bg-red-500 text-white rounded-full px-2 text-xs">
+                {quantity}
+              </span>
             )}
-            <button
-              onClick={logout}
-              className="block w-full text-left px-3 py-2 rounded bg-red-600 hover:bg-red-700 text-white"
-            >
-              Logout
-            </button>
-          </>
-        ) : (
-          <Link to="/login" className="block px-3 py-2 rounded hover:bg-teal-700">Login</Link>
-        )}
-      </div>
+          </Link>
+          {user ? (
+            <>
+              <Link to="/account" className="block px-3 py-2 rounded hover:bg-teal-700">Account</Link>
+              {user?.role === "admin" && (
+                <Link to="/admin" className="block px-3 py-2 rounded hover:bg-teal-700">Admin Dashboard</Link>
+              )}
+              <button
+                onClick={logout}
+                className="block w-full text-left px-3 py-2 rounded bg-red-600 hover:bg-red-700 text-white"
+              >
+                Logout
+              </button>
+            </>
+          ) : (
+            <Link to="/login" className="block px-3 py-2 rounded hover:bg-teal-700">Login</Link>
+          )}
+        </div>
+      )}
     </nav>
   );
 };
