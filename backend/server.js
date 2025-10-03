@@ -21,13 +21,41 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // ✅ CORS config
+// Parse allowed origins from environment variable
+const allowedOrigins = process.env.ALLOWED_ORIGINS 
+  ? process.env.ALLOWED_ORIGINS.split(',')
+  : ['http://localhost:5173'];
+
+// CORS configuration
 app.use(
   cors({
-    origin: "http://localhost:5173", // your React app URL
+    origin: function (origin, callback) {
+      // Allow requests with no origin (like mobile apps or curl requests)
+      if (!origin) return callback(null, true);
+      
+      if (allowedOrigins.indexOf(origin) === -1) {
+        const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
+        return callback(new Error(msg), false);
+      }
+      return callback(null, true);
+    },
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true // Enable credentials (cookies, authorization headers, etc.)
   })
 );
+
+// CORS error handler
+app.use((err, req, res, next) => {
+  if (err.message.includes('CORS')) {
+    res.status(403).json({
+      error: 'CORS Error',
+      message: 'Origin not allowed'
+    });
+  } else {
+    next(err);
+  }
+});
 
 // ✅ Mount normal routes
 app.use("/api/auth", authRoute);
