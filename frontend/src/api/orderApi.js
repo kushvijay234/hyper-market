@@ -1,6 +1,5 @@
 import axios from "axios";
-const baseURL = process.env.REACT_APP_BASE_URL;
-
+const baseURL = import.meta.env.VITE_API_URL;
 
 // ✅ Backend URL (Express server, not React)
 const BASE_URL = `${baseURL}/api/orders`;

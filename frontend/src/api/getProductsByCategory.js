@@ -1,6 +1,6 @@
 // src/api/getProductsByCategory.js
 import axios from "axios";
-const baseURL = process.env.REACT_APP_BASE_URL;
+const baseURL = import.meta.env.VITE_API_URL;
 
 const API_URL = `${baseURL}/api/product`;
 
