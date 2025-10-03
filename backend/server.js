@@ -23,7 +23,7 @@ app.use(express.urlencoded({ extended: true }));
 // ✅ CORS config
 app.use(
   cors({
-    origin: "http://localhost:5173", // your React app URL
+    origin: "https://hyper-market-topaz.vercel.app", // your React app URL
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })
