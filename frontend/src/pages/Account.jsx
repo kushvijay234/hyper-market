@@ -1,4 +1,3 @@
-
 import React, { useContext, useState } from "react";
 import { AuthContext } from "../utils/AuthContext";
 import SigninForm from "../components/SigninForm";
@@ -11,24 +10,27 @@ function Account() {
   const { user, loading } = useContext(AuthContext);
   const [activeTab, setActiveTab] = useState("dashboard");
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <p className="text-center py-10">Loading...</p>;
   if (!user) return <SigninForm />;
 
   return (
-    <div className="h-full max-w-6xl mx-auto p-26">
-      <h2 className="text-2xl font-bold mb-6">My Account</h2>
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+      <h2 className="text-2xl sm:text-3xl font-bold mb-6 text-center sm:text-left">My Account</h2>
+
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
         {/* Sidebar Navigation */}
-        <DashboardNav activeTab={activeTab} setActiveTab={setActiveTab} />
+        <div className="md:col-span-1">
+          <DashboardNav activeTab={activeTab} setActiveTab={setActiveTab} />
+        </div>
 
         {/* Main Content */}
-        <div className="col-span-3 bg-white p-6 rounded-lg shadow">
+        <div className="md:col-span-3 bg-white p-4 sm:p-6 rounded-lg shadow">
           {activeTab === "dashboard" && (
             <div>
-              <h3 className="text-xl font-semibold mb-4">
+              <h3 className="text-lg sm:text-xl font-semibold mb-4">
                 Hello {user.username} 👋
               </h3>
-              <p>
+              <p className="text-sm sm:text-base">
                 From your account dashboard you can view your{" "}
                 <button
                   onClick={() => setActiveTab("orders")}
