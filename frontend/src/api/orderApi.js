@@ -1,7 +1,9 @@
 import axios from "axios";
+const baseURL = process.env.REACT_APP_BASE_URL;
+
 
 // ✅ Backend URL (Express server, not React)
-const BASE_URL = "http://localhost:3000/api/orders";
+const BASE_URL = `${baseURL}/api/orders`;
 
 // Place a new order
 export const placeOrder = async (orderData, token) => {

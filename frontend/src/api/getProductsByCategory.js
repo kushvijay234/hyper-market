@@ -1,7 +1,8 @@
 // src/api/getProductsByCategory.js
 import axios from "axios";
+const baseURL = process.env.REACT_APP_BASE_URL;
 
-const API_URL = "http://localhost:3000/api/product";
+const API_URL = `${baseURL}/api/product`;
 
 const getProductsByCategory = async (categoryName) => {
   try {

@@ -1,4 +1,6 @@
-const API_BASE_URL = "http://localhost:3000/api";
+const baseURL = process.env.REACT_APP_BASE_URL;
+
+const API_BASE_URL = `${baseURL}/api`;
 
 const getAuthHeaders = () => {
   const token = localStorage.getItem("token");

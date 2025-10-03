@@ -1,6 +1,7 @@
 import axios from "axios";
+const baseURL = process.env.REACT_APP_BASE_URL;
 
-const API_URL = "http://localhost:3000/api/category"
+const API_URL = `${baseURL}/api/category`;
 
 const getCategories = async () => {
     try {
