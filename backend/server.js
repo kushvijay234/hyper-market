@@ -24,7 +24,7 @@ app.use(express.urlencoded({ extended: true }));
 // Parse allowed origins from environment variable
 const allowedOrigins = process.env.ALLOWED_ORIGINS 
   ? process.env.ALLOWED_ORIGINS.split(',')
-  : ['http://localhost:5173'];
+  : ['http://localhost:5173', 'https://hyper-market-eight.vercel.app'];
 
 // CORS configuration
 app.use(
