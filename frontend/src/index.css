@@ -1,0 +1,8 @@
+@import "tailwindcss";
+
+
+@layer components { 
+    .container {
+        @apply p-4;
+    }
+}
