@@ -18,10 +18,10 @@ const Footer = () => {
         <div>
           <h3 className="text-lg font-semibold mb-4">Categories</h3>
           <ul className="space-y-2 text-teal-100 text-sm">
-            <li><Link to="/category/fashion" className="hover:text-white">Fashion</Link></li>
-            <li><Link to="/category/electronics" className="hover:text-white">Electronics</Link></li>
-            <li><Link to="/category/home" className="hover:text-white">Home & Living</Link></li>
-            <li><Link to="/category/grocery" className="hover:text-white">Grocery</Link></li>
+            <li><Link to="#" className="hover:text-white">Fashion</Link></li>
+            <li><Link to="#" className="hover:text-white">Electronics</Link></li>
+            <li><Link to="#" className="hover:text-white">Home & Living</Link></li>
+            <li><Link to="#" className="hover:text-white">Grocery</Link></li>
           </ul>
         </div>
 
@@ -29,10 +29,10 @@ const Footer = () => {
         <div>
           <h3 className="text-lg font-semibold mb-4">Support</h3>
           <ul className="space-y-2 text-teal-100 text-sm">
-            <li><Link to="/help" className="hover:text-white">Help Center</Link></li>
-            <li><Link to="/returns" className="hover:text-white">Returns</Link></li>
-            <li><Link to="/shipping" className="hover:text-white">Shipping Info</Link></li>
-            <li><Link to="/contact" className="hover:text-white">Contact Us</Link></li>
+            <li><Link to="#" className="hover:text-white">Help Center</Link></li>
+            <li><Link to="#" className="hover:text-white">Returns</Link></li>
+            <li><Link to="#" className="hover:text-white">Shipping Info</Link></li>
+            <li><Link to="#" className="hover:text-white">Contact Us</Link></li>
           </ul>
         </div>
 
