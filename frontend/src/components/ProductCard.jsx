@@ -24,7 +24,10 @@ const ProductCard = ({ product }) => {
     : [];
 
   return (
-    <div className="border rounded-xl p-3 sm:p-4 shadow-md hover:shadow-xl transition-all duration-300 bg-white hover:scale-105">
+    <div
+      className="border rounded-xl p-3 sm:p-4 shadow-md hover:shadow-xl transition-all duration-300 bg-white hover:scale-105"
+      aria-label={`Product card for ${product.title}`}
+    >
       {/* Product Image + Link */}
       <Link
         to={`/product/${product._id}`}
@@ -43,14 +46,23 @@ const ProductCard = ({ product }) => {
         </h3>
 
         {/* Rating + Price in one line */}
-        <div className="flex items-center justify-between my-2">
-          <div className="flex items-center space-x-1">
+        <div
+          className="flex items-center justify-between my-2"
+          aria-label={`Rating and price for ${product.title}`}
+        >
+          <div
+            className="flex items-center space-x-1"
+            aria-label={`Rating: ${product.rating || "No rating"} stars`}
+          >
             <Star className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-400 fill-yellow-400" />
             <span className="text-xs sm:text-sm text-gray-700 font-medium">
               {product.rating || "No rating"}
             </span>
           </div>
-          <p className="text-sm sm:text-base text-gray-600 font-medium">
+          <p
+            className="text-sm sm:text-base text-gray-600 font-medium"
+            aria-label={`Price: $${product.price}`}
+          >
             ${product.price}
           </p>
         </div>
@@ -66,7 +78,10 @@ const ProductCard = ({ product }) => {
           >
             -
           </button>
-          <span className="px-3 sm:px-4 py-1.5 sm:py-2 bg-gray-100 text-teal-800 font-medium rounded-lg border text-sm">
+          <span
+            className="px-3 sm:px-4 py-1.5 sm:py-2 bg-gray-100 text-teal-800 font-medium rounded-lg border text-sm"
+            aria-label={`Quantity of ${product.title} in cart: ${quantity}`}
+          >
             {quantity}
           </span>
           <button
