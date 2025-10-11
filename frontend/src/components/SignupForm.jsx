@@ -8,7 +8,7 @@ function SignupForm() {
     name: "",
     email: "",
     password: "",
-    role: "customer", // default role
+    role: "customer",
   });
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
@@ -22,6 +22,7 @@ function SignupForm() {
     e.preventDefault();
     setSuccess("");
     setError("");
+
     try {
       const res = await signup(formData);
       localStorage.setItem("token", res.data.token);
@@ -29,7 +30,13 @@ function SignupForm() {
       window.location.reload();
     } catch (err) {
       console.error("Signup error:", err);
-      const errorMsg = err?.response?.data?.error || err?.message || "Signup failed";
+
+      const errorData = err?.response?.data;
+      const errorMsg =
+        typeof errorData === "string"
+          ? errorData
+          : errorData?.error || err.message || "Signup failed";
+
       setError(errorMsg);
     }
   };
