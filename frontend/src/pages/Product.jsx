@@ -5,6 +5,7 @@ import ProductCard from "../components/ProductCard";
 import SortDropdown from "../components/SortDropdown";
 import { SearchContext } from "../utils/SearchContext";
 import { filterAndSortProducts } from "../utils/filterProducts";
+import ProductSkeletonCard from "../components/ProductSkeletonCard";
 
 const ProductList = () => {
   const [products, setProducts] = useState([]);
@@ -36,7 +37,17 @@ const ProductList = () => {
     fetchData();
   }, []);
 
-  if (loading) return <p className="p-6">Loading products...</p>;
+  if (loading) {
+  return (
+    <div className="px-4 sm:px-6 lg:px-8 py-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
+        {Array.from({ length: 12 }).map((_, i) => (
+          <ProductSkeletonCard key={i} />
+        ))}
+      </div>
+    </div>
+  );
+}
   if (error) return <p className="p-6 text-red-500">{error}</p>;
 
   // ✅ Fixed filtering logic for populated category objects
