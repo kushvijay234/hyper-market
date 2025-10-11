@@ -23,29 +23,28 @@ const CategoriesSection = () => {
     fetchCategories();
   }, []);
   return (
-    <section className="bg-gray-50 px-6 md:px-24 py-16">
+    <section className="bg-gray-50 px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
       <div className="max-w-7xl mx-auto">
-        <h2 className="text-3xl font-bold text-teal-800 mb-8 text-center">
+        <h2 className="text-2xl sm:text-3xl font-bold text-teal-800 mb-6 sm:mb-8 text-center">
           Shop by Category
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-6">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 sm:gap-6">
           {filteredCategories.map((cat) => (
             <div
               key={cat.name}
-              className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition"
+              className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-all duration-300 hover:scale-105"
             >
               <img
                 src={categoryImageMap[cat.name]}
                 alt={cat.name}
-                className="w-full h-32 object-cover"
+                className="w-full h-24 sm:h-32 object-cover"
               />
-              <div className="p-4 text-center">
-                <h3 className="text-teal-700 font-semibold">{cat.name}</h3>
+              <div className="p-3 sm:p-4 text-center">
+                <h3 className="text-sm sm:text-base text-teal-700 font-semibold">{cat.name}</h3>
               </div>
             </div>
           ))}
         </div>
-        
       </div>
     </section>
   );

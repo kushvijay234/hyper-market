@@ -31,37 +31,39 @@ const App = () => {
           element={
             <>
               <Navbar />
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/product" element={<Product />} />
-                <Route path="/product/:id" element={<SingleProduct />} />
-                <Route
-                  path="/cart"
-                  element={
-                    <ProtectedRoute>
-                      <Cart />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route path="/account" element={<Account />} />
-                <Route
-                  path="/checkout"
-                  element={
-                    <ProtectedRoute>
-                      <Checkout />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/order-success"
-                  element={
-                    <ProtectedRoute>
-                      <OrderSuccess />
-                    </ProtectedRoute>
-                  }
-                />
-              </Routes>
-              <Footer />
+              <div className="pt-14 sm:pt-16">
+                <Routes>
+                  <Route path="/" element={<Home />} />
+                  <Route path="/product" element={<Product />} />
+                  <Route path="/product/:id" element={<SingleProduct />} />
+                  <Route
+                    path="/cart"
+                    element={
+                      <ProtectedRoute>
+                        <Cart />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route path="/account" element={<Account />} />
+                  <Route
+                    path="/checkout"
+                    element={
+                      <ProtectedRoute>
+                        <Checkout />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/order-success"
+                    element={
+                      <ProtectedRoute>
+                        <OrderSuccess />
+                      </ProtectedRoute>
+                    }
+                  />
+                </Routes>
+                <Footer />
+              </div>
             </>
           }
         />

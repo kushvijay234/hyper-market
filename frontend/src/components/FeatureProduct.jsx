@@ -20,10 +20,10 @@ const FeatureProduct = () => {
   }, []);
 
   return (
-    <section className="bg-white px-6 md:px-24 py-16">
+    <section className="bg-white px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
       <div className="max-w-7xl mx-auto">
-        <h2 className="text-3xl font-bold text-teal-800 mb-8 text-center">Featured Products</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+        <h2 className="text-2xl sm:text-3xl font-bold text-teal-800 mb-6 sm:mb-8 text-center">Featured Products</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
           {products.map((product) => (
             <ProductCard key={product.id || product._id} product={product} />
           ))}
