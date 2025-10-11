@@ -4,7 +4,10 @@ import bannerImage from "../assets/bannerWomen.png";
 
 const HeroSection = () => {
   return (
-    <section className="bg-gray-50 px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16">
+    <section
+      className="bg-gray-50 px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16"
+      aria-label="Hero section promoting HyperMarket"
+    >
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 items-center gap-8 lg:gap-12">
           {/* Left Text Block */}
@@ -19,6 +22,7 @@ const HeroSection = () => {
             <div className="flex justify-center lg:justify-start">
               <Link
                 to="/product"
+                aria-label="Browse products at HyperMarket"
                 className="bg-teal-800 text-white font-semibold px-4 sm:px-6 py-2 sm:py-3 rounded-md hover:bg-teal-900 transition text-sm sm:text-base"
               >
                 Shop Now
@@ -30,7 +34,8 @@ const HeroSection = () => {
           <div className="w-full flex items-center justify-center order-1 lg:order-2">
             <img
               src={bannerImage}
-              alt="Banner"
+              alt="Woman showcasing fashion collection"
+              aria-label="Promotional banner for fashion collection"
               className="w-full max-h-[300px] sm:max-h-[400px] lg:max-h-[500px] object-contain rounded-lg"
             />
           </div>
