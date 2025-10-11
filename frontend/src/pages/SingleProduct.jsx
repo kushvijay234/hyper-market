@@ -48,7 +48,7 @@ const SingleProduct = () => {
   const tagNames = product.tags?.map((t) => t.name).join(", ");
 
   return (
-    <div className="py-26 px-6 max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12">
+    <div className="py-6 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
       {/* Left - Images */}
       <div className="relative">
         <Link

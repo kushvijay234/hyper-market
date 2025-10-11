@@ -86,14 +86,15 @@ const Checkout = () => {
   };
 
   return (
-    <div className="max-w-6xl mx-auto p-8">
-      <h1 className="text-3xl font-bold mb-6 text-gray-800">💳 Checkout</h1>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-        {/* Left: User Info, Address, Payment */}
-        <div className="md:col-span-2 bg-white p-6 rounded-xl shadow-md">
-          <h2 className="text-xl font-semibold mb-4 text-gray-700">
-            Customer Information
-          </h2>
+    <div className="min-h-screen bg-gray-50">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+        <h1 className="text-2xl sm:text-3xl font-bold mb-6 text-gray-800">💳 Checkout</h1>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
+          {/* Left: User Info, Address, Payment */}
+          <div className="lg:col-span-2 bg-white p-4 sm:p-6 rounded-xl shadow-md">
+            <h2 className="text-lg sm:text-xl font-semibold mb-4 text-gray-700">
+              Customer Information
+            </h2>
           {user && address ? (
             <>
               <div className="p-4 border rounded-xl shadow-sm bg-gray-50 mb-4">
@@ -144,35 +145,38 @@ const Checkout = () => {
           />
         </div>
 
-        {/* Right: Order Summary */}
-        <div className="bg-gray-50 p-6 rounded-xl shadow-md h-fit">
-          <h2 className="text-xl font-semibold mb-4 text-gray-700">
-            Order Summary
-          </h2>
-          {cart.map((item) => (
-            <div key={item.id} className="flex justify-between mb-2">
-              <span>
-                {item.title} × {item.quantity}
-              </span>
-              <span>${(item.price * item.quantity).toFixed(2)}</span>
+          {/* Right: Order Summary */}
+          <div className="bg-white p-4 sm:p-6 rounded-xl shadow-md h-fit">
+            <h2 className="text-lg sm:text-xl font-semibold mb-4 text-gray-700">
+              Order Summary
+            </h2>
+            <div className="space-y-2 mb-4">
+              {cart.map((item) => (
+                <div key={item.id} className="flex justify-between text-sm">
+                  <span className="truncate flex-1 mr-2">
+                    {item.title} × {item.quantity}
+                  </span>
+                  <span className="font-medium">${(item.price * item.quantity).toFixed(2)}</span>
+                </div>
+              ))}
             </div>
-          ))}
-          <hr className="my-4" />
-          <div className="flex justify-between text-lg font-bold text-gray-800">
-            <span>Total:</span>
-            <span>${totalAmount.toFixed(2)}</span>
+            <hr className="my-4" />
+            <div className="flex justify-between text-lg font-bold text-gray-800">
+              <span>Total:</span>
+              <span>${totalAmount.toFixed(2)}</span>
+            </div>
+            <button
+              onClick={handlePlaceOrder}
+              disabled={!paymentMethod || loading}
+              className={`w-full mt-6 px-4 sm:px-6 py-3 rounded-xl shadow-md font-semibold text-sm sm:text-base ${
+                paymentMethod
+                  ? "bg-teal-800 hover:bg-teal-600 text-white"
+                  : "bg-gray-300 text-gray-500 cursor-not-allowed"
+              }`}
+            >
+              {loading ? "Placing Order..." : "PLACE ORDER →"}
+            </button>
           </div>
-          <button
-            onClick={handlePlaceOrder}
-            disabled={!paymentMethod || loading}
-            className={`w-full mt-6 px-6 py-3 rounded-xl shadow-md font-semibold ${
-              paymentMethod
-                ? "bg-teal-800 hover:bg-teal-600 text-white"
-                : "bg-gray-300 text-gray-500 cursor-not-allowed"
-            }`}
-          >
-            {loading ? "Placing Order..." : "PLACE ORDER →"}
-          </button>
         </div>
       </div>
     </div>

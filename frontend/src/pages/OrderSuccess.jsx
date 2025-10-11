@@ -16,7 +16,7 @@ const OrderSuccess = () => {
 
   if (!state) {
     return (
-      <div className="max-w-4xl mx-auto p-8 text-center">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 text-center">
         <h2 className="text-2xl font-bold text-red-600">⚠️ No order found.</h2>
         <button onClick={() => navigate("/")} className="mt-4 px-6 py-2 bg-teal-700 text-white rounded-lg">Back to Home</button>
       </div>
@@ -24,7 +24,8 @@ const OrderSuccess = () => {
   }
 
   return (
-    <div className="max-w-4xl mx-auto p-8 bg-white shadow-lg rounded-xl">
+    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+      <div className="bg-white shadow-lg rounded-xl p-6 sm:p-8">
       <h1 className="text-3xl font-bold text-teal-800 mb-4 text-center">🎉 Thank you. Your order has been received.</h1>
 
       {/* Order Details */}
@@ -67,6 +68,7 @@ const OrderSuccess = () => {
 
       <div className="mt-6 text-center">
         <button onClick={() => navigate("/")} className="px-6 py-3 bg-teal-800 text-white rounded-lg shadow hover:bg-teal-600">Continue Shopping →</button>
+      </div>
       </div>
     </div>
   );

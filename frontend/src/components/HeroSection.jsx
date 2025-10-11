@@ -4,34 +4,36 @@ import bannerImage from "../assets/bannerWomen.png";
 
 const HeroSection = () => {
   return (
-    <section className="bg-gray-50 px-6 md:px-24 py-10">
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 items-center min-h-[600px] gap-12">
-        {/* Left Text Block */}
-        <div className="flex flex-col justify-center text-center md:text-left">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold leading-tight mb-6 text-teal-800">
-            HyperMarket: Style Meets Simplicity
-          </h1>
-          <p className="text-base sm:text-lg md:text-xl text-teal-700 mb-8">
-            Shop curated collections of fashion, tech, and lifestyle essentials.
-            Designed for you.
-          </p>
-          <div className="flex justify-center md:justify-start">
-            <Link
-              to="/product"
-              className="bg-teal-800 text-white font-semibold px-6 py-3 rounded-md hover:bg-teal-900 transition"
-            >
-              Shop Now
-            </Link>
+    <section className="bg-gray-50 px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16">
+      <div className="max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-2 items-center gap-8 lg:gap-12">
+          {/* Left Text Block */}
+          <div className="flex flex-col justify-center text-center lg:text-left order-2 lg:order-1">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold leading-tight mb-4 sm:mb-6 text-teal-800">
+              HyperMarket: Style Meets Simplicity
+            </h1>
+            <p className="text-sm sm:text-base md:text-lg lg:text-xl text-teal-700 mb-6 sm:mb-8 leading-relaxed">
+              Shop curated collections of fashion, tech, and lifestyle essentials.
+              Designed for you.
+            </p>
+            <div className="flex justify-center lg:justify-start">
+              <Link
+                to="/product"
+                className="bg-teal-800 text-white font-semibold px-4 sm:px-6 py-2 sm:py-3 rounded-md hover:bg-teal-900 transition text-sm sm:text-base"
+              >
+                Shop Now
+              </Link>
+            </div>
           </div>
-        </div>
 
-        {/* Right Image Block */}
-        <div className="w-full flex items-center justify-center">
-          <img
-            src={bannerImage}
-            alt="Banner"
-            className="w-full max-h-[400px] object-contain rounded-lg"
-          />
+          {/* Right Image Block */}
+          <div className="w-full flex items-center justify-center order-1 lg:order-2">
+            <img
+              src={bannerImage}
+              alt="Banner"
+              className="w-full max-h-[300px] sm:max-h-[400px] lg:max-h-[500px] object-contain rounded-lg"
+            />
+          </div>
         </div>
       </div>
     </section>

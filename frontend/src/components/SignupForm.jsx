@@ -40,7 +40,7 @@ function SignupForm() {
     <form
       onSubmit={handleSubmit}
       aria-label="Signup Form"
-      className="flex items-center justify-center bg-gradient-to-br from-teal-50 via-white to-teal-100 px-4 min-h-[calc(100vh-64px)]"
+      className="flex items-center justify-center bg-gradient-to-br from-teal-50 via-white to-teal-100 px-4 min-h-[calc(100vh-56px)] sm:min-h-[calc(100vh-64px)]"
     >
       <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-8 space-y-6">
         <h2 className="text-3xl font-bold text-center text-gray-800">Sign Up</h2>
