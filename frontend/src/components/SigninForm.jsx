@@ -1,13 +1,14 @@
 import React, { useState, useContext } from "react";
 import { signin as signinApi } from "../api/auth";
 import { AuthContext } from "../utils/AuthContext";
-import SignupForm from "./SignupForm"; // import your SignupForm
+import SignupForm from "./SignupForm";
 
 function SigninForm() {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const { signin } = useContext(AuthContext);
   const [error, setError] = useState("");
-  const [showSignup, setShowSignup] = useState(false); // toggle state
+  const [loading, setLoading] = useState(false);
+  const [showSignup, setShowSignup] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -16,15 +17,23 @@ function SigninForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
+    setLoading(true);
+
     try {
       const res = await signinApi(formData);
       signin(res.data.token);
     } catch (error) {
-      setError(error?.response?.data?.error || "Signin failed");
+      const errorData = error?.response?.data;
+      const errorMsg =
+        typeof errorData === "string"
+          ? errorData
+          : errorData?.error || error.message || "Signin failed";
+      setError(errorMsg);
+    } finally {
+      setLoading(false);
     }
   };
 
-  // If user clicked Sign Up, show SignupForm component
   if (showSignup) return <SignupForm onBack={() => setShowSignup(false)} />;
 
   return (
@@ -36,6 +45,15 @@ function SigninForm() {
       <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-8 space-y-6">
         <h2 className="text-3xl font-bold text-center text-gray-800">Sign In</h2>
 
+        {loading && (
+          <div
+            role="status"
+            aria-live="polite"
+            className="text-center text-teal-600 font-medium"
+          >
+            Signing in...
+          </div>
+        )}
         {error && (
           <div
             role="alert"
@@ -80,10 +98,15 @@ function SigninForm() {
 
         <button
           type="submit"
+          disabled={loading}
           aria-label="Sign in button"
-          className="w-full bg-teal-600 text-white py-3 rounded-lg font-semibold shadow-md hover:bg-teal-700 transition duration-200"
+          className={`w-full py-3 rounded-lg font-semibold shadow-md transition duration-200 ${
+            loading
+              ? "bg-gray-400 cursor-not-allowed"
+              : "bg-teal-600 hover:bg-teal-700 text-white"
+          }`}
         >
-          Sign In
+          {loading ? "Signing in..." : "Sign In"}
         </button>
 
         <p className="text-center text-gray-600 text-sm">

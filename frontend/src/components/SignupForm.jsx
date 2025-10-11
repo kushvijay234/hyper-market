@@ -12,6 +12,7 @@ function SignupForm() {
   });
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [loading, setLoading] = useState(false);
   const [showSignin, setShowSignin] = useState(false);
 
   const handleChange = (e) => {
@@ -22,6 +23,7 @@ function SignupForm() {
     e.preventDefault();
     setSuccess("");
     setError("");
+    setLoading(true);
 
     try {
       const res = await signup(formData);
@@ -30,14 +32,14 @@ function SignupForm() {
       window.location.reload();
     } catch (err) {
       console.error("Signup error:", err);
-
       const errorData = err?.response?.data;
       const errorMsg =
         typeof errorData === "string"
           ? errorData
           : errorData?.error || err.message || "Signup failed";
-
       setError(errorMsg);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -52,6 +54,15 @@ function SignupForm() {
       <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-8 space-y-6">
         <h2 className="text-3xl font-bold text-center text-gray-800">Sign Up</h2>
 
+        {loading && (
+          <div
+            role="status"
+            aria-live="polite"
+            className="text-center text-teal-600 font-medium"
+          >
+            Creating account...
+          </div>
+        )}
         {success && (
           <div
             role="alert"
@@ -131,10 +142,15 @@ function SignupForm() {
 
         <button
           type="submit"
+          disabled={loading}
           aria-label="Sign up button"
-          className="w-full bg-teal-600 text-white py-3 rounded-lg font-semibold shadow-md hover:bg-teal-700 transition duration-200"
+          className={`w-full py-3 rounded-lg font-semibold shadow-md transition duration-200 ${
+            loading
+              ? "bg-gray-400 cursor-not-allowed"
+              : "bg-teal-600 hover:bg-teal-700 text-white"
+          }`}
         >
-          Sign Up
+          {loading ? "Signing up..." : "Sign Up"}
         </button>
 
         <p className="text-center text-gray-600 text-sm">
