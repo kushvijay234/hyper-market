@@ -21,11 +21,16 @@ router.post("/signup", validateUserInput, async (req, res) => {
       role: req.body.role,
     });
     await user.save();
-    await sendEmail(
+    try {
+      await sendEmail(
       email,
       "Welcome to Our App 🎉",
       `Hello,\n\nYour account has been created successfully.\n\nThank you for registering!`
     );
+    } catch (emailErr) {
+      console.error("Email sending failed:", emailErr.message);
+    }
+    
     // generate JWT token
     const token = generateToken(user);
 
