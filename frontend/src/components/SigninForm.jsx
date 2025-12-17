@@ -1,9 +1,12 @@
 import React, { useState, useContext } from "react";
-import { signin as signinApi } from "../api/auth";
+import { signin as signinApi, googleSignin } from "../api/auth";
+import { GoogleLogin } from "@react-oauth/google";
 import { AuthContext } from "../utils/AuthContext";
 import SignupForm from "./SignupForm";
+import { Eye, EyeOff } from "lucide-react";
 
 function SigninForm() {
+  const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({ email: "", password: "" });
   const { signin } = useContext(AuthContext);
   const [error, setError] = useState("");
@@ -84,15 +87,28 @@ function SigninForm() {
             <label htmlFor="password" className="sr-only">
               Password
             </label>
-            <input
-              id="password"
-              name="password"
-              type="password"
-              placeholder="Password"
-              onChange={handleChange}
-              autoComplete="current-password"
-              className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-teal-500 focus:outline-none"
-            />
+            <div className="relative">
+              <input
+                id="password"
+                name="password"
+                type={showPassword ? "text" : "password"}
+                placeholder="Password"
+                onChange={handleChange}
+                autoComplete="current-password"
+                className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-teal-500 focus:outline-none pr-10"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 focus:outline-none"
+              >
+                {showPassword ? (
+                  <EyeOff className="h-5 w-5" />
+                ) : (
+                  <Eye className="h-5 w-5" />
+                )}
+              </button>
+            </div>
           </div>
         </div>
 
@@ -100,14 +116,39 @@ function SigninForm() {
           type="submit"
           disabled={loading}
           aria-label="Sign in button"
-          className={`w-full py-3 rounded-lg font-semibold shadow-md transition duration-200 ${
-            loading
-              ? "bg-gray-400 cursor-not-allowed"
-              : "bg-teal-600 hover:bg-teal-700 text-white"
-          }`}
+          className={`w-full py-3 rounded-lg font-semibold shadow-md transition duration-200 ${loading
+            ? "bg-gray-400 cursor-not-allowed"
+            : "bg-teal-600 hover:bg-teal-700 text-white"
+            }`}
         >
           {loading ? "Signing in..." : "Sign In"}
         </button>
+
+        <div className="relative my-4">
+          <div className="absolute inset-0 flex items-center">
+            <div className="w-full border-t border-gray-300"></div>
+          </div>
+          <div className="relative flex justify-center text-sm">
+            <span className="px-2 bg-white text-gray-500">Or continue with</span>
+          </div>
+        </div>
+
+        <div className="flex justify-center">
+          <GoogleLogin
+            onSuccess={async (credentialResponse) => {
+              try {
+                const res = await googleSignin(credentialResponse.credential);
+                signin(res.data.token);
+              } catch (err) {
+                console.error(err);
+                setError("Google Signin Failed");
+              }
+            }}
+            onError={() => {
+              setError("Google Signin Failed");
+            }}
+          />
+        </div>
 
         <p className="text-center text-gray-600 text-sm">
           Don’t have an account?{" "}

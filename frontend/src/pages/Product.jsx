@@ -38,16 +38,16 @@ const ProductList = () => {
   }, []);
 
   if (loading) {
-  return (
-    <div className="px-4 sm:px-6 lg:px-8 py-6">
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
-        {Array.from({ length: 12 }).map((_, i) => (
-          <ProductSkeletonCard key={i} />
-        ))}
+    return (
+      <div className="px-4 sm:px-6 lg:px-8 py-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
+          {Array.from({ length: 12 }).map((_, i) => (
+            <ProductSkeletonCard key={i} />
+          ))}
+        </div>
       </div>
-    </div>
-  );
-}
+    );
+  }
   if (error) return <p className="p-6 text-red-500">{error}</p>;
 
   // ✅ Fixed filtering logic for populated category objects
@@ -72,7 +72,7 @@ const ProductList = () => {
   };
 
   return (
-    <div className="px-4 sm:px-6 lg:px-8 py-6">
+    <div className="px-4 sm:px-6 lg:px-8 py-6 max-w-7xl mx-auto">
       {/* Mobile/Tablet Toggle Button */}
       <div className="lg:hidden mb-6 flex justify-between items-center">
         <h2 className="text-xl font-bold text-gray-800">Products</h2>
@@ -87,9 +87,8 @@ const ProductList = () => {
       <div className="flex flex-col lg:flex-row gap-6">
         {/* Sidebar */}
         <aside
-          className={`w-full md:w-[250px] lg:w-[200px] shrink-0 transition-all duration-300 ${
-            isSidebarOpen ? "block" : "hidden"
-          } lg:block`}
+          className={`w-full md:w-[250px] lg:w-[200px] shrink-0 transition-all duration-300 ${isSidebarOpen ? "block" : "hidden"
+            } lg:block`}
         >
           <div className="bg-white p-4 rounded-lg shadow-md">
             <h3 className="text-lg font-semibold mb-4 text-gray-800">Categories</h3>
@@ -102,11 +101,10 @@ const ProductList = () => {
                       setCurrentPage(1);
                       setIsSidebarOpen(false);
                     }}
-                    className={`w-full text-left text-sm sm:text-base px-3 py-2 rounded-md transition-all duration-200 ${
-                      selectedCategory === cat.name
+                    className={`w-full text-left text-sm sm:text-base px-3 py-2 rounded-md transition-all duration-200 ${selectedCategory === cat.name
                         ? "bg-teal-700 text-white shadow-sm"
                         : "text-gray-700 hover:bg-teal-100 hover:text-teal-800"
-                    }`}
+                      }`}
                   >
                     {cat.name}
                   </button>
@@ -154,11 +152,10 @@ const ProductList = () => {
                     <button
                       key={pageNum}
                       onClick={() => handlePageChange(pageNum)}
-                      className={`px-3 py-2 rounded-lg text-sm ${
-                        currentPage === pageNum
+                      className={`px-3 py-2 rounded-lg text-sm ${currentPage === pageNum
                           ? "bg-teal-900 text-white"
                           : "bg-teal-100 text-teal-900 hover:bg-teal-200"
-                      }`}
+                        }`}
                     >
                       {pageNum}
                     </button>

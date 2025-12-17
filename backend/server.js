@@ -26,6 +26,7 @@ app.use(
     origin: ["http://localhost:5173", "https://hyper-market-eight.vercel.app"], // your React app URLs
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
+    
   })
 );
 

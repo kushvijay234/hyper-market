@@ -1,7 +1,7 @@
 import React from "react";
 
 const PaymentMethod = ({ selectedMethod, setSelectedMethod }) => {
-  const methods = ["Cash on Delivery"];
+  const methods = ["Cash on Delivery", "Stripe"];
 
   return (
     <div className="mt-6">

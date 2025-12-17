@@ -1,12 +1,13 @@
 import mongoose, { Schema } from "mongoose";
 
-const userSchema = new Schema ({
+const userSchema = new Schema({
     username: { type: String },
-    name: { type: String},
+    name: { type: String },
     email: { type: String },
     password: { type: String },
-    role : { type: String, enum: ['admin', 'customer'], default: 'customer'},
-    profileImage : {type: String},
+    role: { type: String, enum: ['admin', 'customer'], default: 'customer' },
+    googleId: { type: String },
+    profileImage: { type: String },
     createdAt: { type: Date, default: Date.now }
 });
 

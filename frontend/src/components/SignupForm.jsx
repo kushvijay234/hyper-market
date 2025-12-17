@@ -1,8 +1,13 @@
 import React, { useState } from "react";
-import { signup } from "../api/auth";
+import { signup, googleSignin } from "../api/auth";
+import { useNavigate } from "react-router-dom";
+import { GoogleLogin } from "@react-oauth/google";
 import SigninForm from "../components/SigninForm";
+import { Eye, EyeOff } from "lucide-react";
 
 function SignupForm() {
+  const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     username: "",
     name: "",
@@ -28,8 +33,25 @@ function SignupForm() {
     try {
       const res = await signup(formData);
       localStorage.setItem("token", res.data.token);
-      setSuccess("Signup successful! 🎉");
-      window.location.reload();
+
+      if (res.data.emailSent) {
+        setSuccess("Signup successful! Email sent. Redirecting... 🎉");
+      } else {
+        setSuccess("Signup successful! Email failed to send. Redirecting...");
+      }
+
+      // Small delay to let user see the message
+      setTimeout(() => {
+        navigate("/account");
+        window.location.reload(); // Ensure state is fresh if needed, though navigate is usually enough. keeping reload as originally requested/implied context might need it for auth state context updates if any.
+        // Actually best to just navigate if we rely on global state updates, but since I don't see context provider usage here, maybe reload is safer for now or just navigate. 
+        // Let's stick to navigate but if the app relies on reload to fetch user profile in App.js or similar, we might need to trigger that.
+        // The user originally had window.location.reload(). 
+        // Let's replace with navigate(0) or just navigate("/account") and reload. 
+        // Better:
+        // window.location.href = "/account"; // This does both navigate and reload
+      }, 1500);
+
     } catch (err) {
       console.error("Signup error:", err);
       const errorData = err?.response?.data;
@@ -128,15 +150,33 @@ function SignupForm() {
             <label htmlFor="password" className="sr-only">
               Password
             </label>
-            <input
-              id="password"
-              name="password"
-              type="password"
-              placeholder="Password"
-              onChange={handleChange}
-              autoComplete="new-password"
-              className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-teal-500 focus:outline-none"
-            />
+            <div>
+              <label htmlFor="password" className="sr-only">
+                Password
+              </label>
+              <div className="relative">
+                <input
+                  id="password"
+                  name="password"
+                  type={showPassword ? "text" : "password"}
+                  placeholder="Password"
+                  onChange={handleChange}
+                  autoComplete="new-password"
+                  className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-teal-500 focus:outline-none pr-10"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 focus:outline-none"
+                >
+                  {showPassword ? (
+                    <EyeOff className="h-5 w-5" />
+                  ) : (
+                    <Eye className="h-5 w-5" />
+                  )}
+                </button>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -144,14 +184,44 @@ function SignupForm() {
           type="submit"
           disabled={loading}
           aria-label="Sign up button"
-          className={`w-full py-3 rounded-lg font-semibold shadow-md transition duration-200 ${
-            loading
-              ? "bg-gray-400 cursor-not-allowed"
-              : "bg-teal-600 hover:bg-teal-700 text-white"
-          }`}
+          className={`w-full py-3 rounded-lg font-semibold shadow-md transition duration-200 ${loading
+            ? "bg-gray-400 cursor-not-allowed"
+            : "bg-teal-600 hover:bg-teal-700 text-white"
+            }`}
         >
           {loading ? "Signing up..." : "Sign Up"}
         </button>
+
+        <div className="relative my-4">
+          <div className="absolute inset-0 flex items-center">
+            <div className="w-full border-t border-gray-300"></div>
+          </div>
+          <div className="relative flex justify-center text-sm">
+            <span className="px-2 bg-white text-gray-500">Or continue with</span>
+          </div>
+        </div>
+
+        <div className="flex justify-center">
+          <GoogleLogin
+            onSuccess={async (credentialResponse) => {
+              try {
+                const res = await googleSignin(credentialResponse.credential);
+                localStorage.setItem("token", res.data.token);
+                setSuccess("Google Signup successful! Redirecting... 🎉");
+                setTimeout(() => {
+                  navigate("/account");
+                  window.location.reload();
+                }, 1500);
+              } catch (err) {
+                console.error(err);
+                setError("Google Signup Failed");
+              }
+            }}
+            onError={() => {
+              setError("Google Signup Failed");
+            }}
+          />
+        </div>
 
         <p className="text-center text-gray-600 text-sm">
           Already have an account?{" "}
