@@ -27,3 +27,14 @@ export const getUserOrders = async (token) => {
     throw err.response ? err.response.data : { message: "Network error" };
   }
 };
+// Create Payment Intent
+export const createPaymentIntent = async (products, token) => {
+  try {
+    const res = await axios.post(`${baseURL}/api/orders/create-payment-intent`, { products }, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return res.data;
+  } catch (err) {
+    throw err.response ? err.response.data : { message: "Network error" };
+  }
+};

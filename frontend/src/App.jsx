@@ -36,23 +36,9 @@ const App = () => {
                   <Route path="/" element={<Home />} />
                   <Route path="/product" element={<Product />} />
                   <Route path="/product/:id" element={<SingleProduct />} />
-                  <Route
-                    path="/cart"
-                    element={
-                      <ProtectedRoute>
-                        <Cart />
-                      </ProtectedRoute>
-                    }
-                  />
+                  <Route path="/cart" element={<Cart />} />
                   <Route path="/account" element={<Account />} />
-                  <Route
-                    path="/checkout"
-                    element={
-                      <ProtectedRoute>
-                        <Checkout />
-                      </ProtectedRoute>
-                    }
-                  />
+                  <Route path="/checkout" element={<Checkout />} />
                   <Route
                     path="/order-success"
                     element={

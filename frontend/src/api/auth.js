@@ -14,4 +14,7 @@ export const signin = (formData) => API.post("/signin", formData);
 export const getProfile = (token) =>
   API.get("/profile", { headers: { Authorization: `Bearer ${token}` } });
 
+// Google Signin
+export const googleSignin = (token) => API.post("/google", { token });
+
 

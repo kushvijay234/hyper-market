@@ -1,5 +1,6 @@
 import React, { useState, useContext } from "react";
-import { signin as signinApi } from "../api/auth";
+import { signin as signinApi, googleSignin } from "../api/auth";
+import { GoogleLogin } from "@react-oauth/google";
 import { AuthContext } from "../utils/AuthContext";
 import SignupForm from "./SignupForm";
 
@@ -100,14 +101,39 @@ function SigninForm() {
           type="submit"
           disabled={loading}
           aria-label="Sign in button"
-          className={`w-full py-3 rounded-lg font-semibold shadow-md transition duration-200 ${
-            loading
-              ? "bg-gray-400 cursor-not-allowed"
-              : "bg-teal-600 hover:bg-teal-700 text-white"
-          }`}
+          className={`w-full py-3 rounded-lg font-semibold shadow-md transition duration-200 ${loading
+            ? "bg-gray-400 cursor-not-allowed"
+            : "bg-teal-600 hover:bg-teal-700 text-white"
+            }`}
         >
           {loading ? "Signing in..." : "Sign In"}
         </button>
+
+        <div className="relative my-4">
+          <div className="absolute inset-0 flex items-center">
+            <div className="w-full border-t border-gray-300"></div>
+          </div>
+          <div className="relative flex justify-center text-sm">
+            <span className="px-2 bg-white text-gray-500">Or continue with</span>
+          </div>
+        </div>
+
+        <div className="flex justify-center">
+          <GoogleLogin
+            onSuccess={async (credentialResponse) => {
+              try {
+                const res = await googleSignin(credentialResponse.credential);
+                signin(res.data.token);
+              } catch (err) {
+                console.error(err);
+                setError("Google Signin Failed");
+              }
+            }}
+            onError={() => {
+              setError("Google Signin Failed");
+            }}
+          />
+        </div>
 
         <p className="text-center text-gray-600 text-sm">
           Don’t have an account?{" "}
