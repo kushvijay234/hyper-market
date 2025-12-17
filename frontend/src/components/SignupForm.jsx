@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { signup } from "../api/auth";
+import { signup, googleSignin } from "../api/auth";
+import { GoogleLogin } from "@react-oauth/google";
 import SigninForm from "../components/SigninForm";
 
 function SignupForm() {
@@ -144,14 +145,41 @@ function SignupForm() {
           type="submit"
           disabled={loading}
           aria-label="Sign up button"
-          className={`w-full py-3 rounded-lg font-semibold shadow-md transition duration-200 ${
-            loading
+          className={`w-full py-3 rounded-lg font-semibold shadow-md transition duration-200 ${loading
               ? "bg-gray-400 cursor-not-allowed"
               : "bg-teal-600 hover:bg-teal-700 text-white"
-          }`}
+            }`}
         >
           {loading ? "Signing up..." : "Sign Up"}
         </button>
+
+        <div className="relative my-4">
+          <div className="absolute inset-0 flex items-center">
+            <div className="w-full border-t border-gray-300"></div>
+          </div>
+          <div className="relative flex justify-center text-sm">
+            <span className="px-2 bg-white text-gray-500">Or continue with</span>
+          </div>
+        </div>
+
+        <div className="flex justify-center">
+          <GoogleLogin
+            onSuccess={async (credentialResponse) => {
+              try {
+                const res = await googleSignin(credentialResponse.credential);
+                localStorage.setItem("token", res.data.token);
+                setSuccess("Google Signup successful! 🎉");
+                window.location.reload();
+              } catch (err) {
+                console.error(err);
+                setError("Google Signup Failed");
+              }
+            }}
+            onError={() => {
+              setError("Google Signup Failed");
+            }}
+          />
+        </div>
 
         <p className="text-center text-gray-600 text-sm">
           Already have an account?{" "}
