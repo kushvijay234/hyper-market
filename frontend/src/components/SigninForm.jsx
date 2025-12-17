@@ -3,8 +3,10 @@ import { signin as signinApi, googleSignin } from "../api/auth";
 import { GoogleLogin } from "@react-oauth/google";
 import { AuthContext } from "../utils/AuthContext";
 import SignupForm from "./SignupForm";
+import { Eye, EyeOff } from "lucide-react";
 
 function SigninForm() {
+  const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({ email: "", password: "" });
   const { signin } = useContext(AuthContext);
   const [error, setError] = useState("");
@@ -85,15 +87,28 @@ function SigninForm() {
             <label htmlFor="password" className="sr-only">
               Password
             </label>
-            <input
-              id="password"
-              name="password"
-              type="password"
-              placeholder="Password"
-              onChange={handleChange}
-              autoComplete="current-password"
-              className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-teal-500 focus:outline-none"
-            />
+            <div className="relative">
+              <input
+                id="password"
+                name="password"
+                type={showPassword ? "text" : "password"}
+                placeholder="Password"
+                onChange={handleChange}
+                autoComplete="current-password"
+                className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-teal-500 focus:outline-none pr-10"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 focus:outline-none"
+              >
+                {showPassword ? (
+                  <EyeOff className="h-5 w-5" />
+                ) : (
+                  <Eye className="h-5 w-5" />
+                )}
+              </button>
+            </div>
           </div>
         </div>
 
