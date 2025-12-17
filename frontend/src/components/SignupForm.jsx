@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { signup, googleSignin } from "../api/auth";
+import { useNavigate } from "react-router-dom";
 import { GoogleLogin } from "@react-oauth/google";
 import SigninForm from "../components/SigninForm";
 
 function SignupForm() {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     username: "",
     name: "",
@@ -29,8 +31,25 @@ function SignupForm() {
     try {
       const res = await signup(formData);
       localStorage.setItem("token", res.data.token);
-      setSuccess("Signup successful! 🎉");
-      window.location.reload();
+
+      if (res.data.emailSent) {
+        setSuccess("Signup successful! Email sent. Redirecting... 🎉");
+      } else {
+        setSuccess("Signup successful! Email failed to send. Redirecting...");
+      }
+
+      // Small delay to let user see the message
+      setTimeout(() => {
+        navigate("/account");
+        window.location.reload(); // Ensure state is fresh if needed, though navigate is usually enough. keeping reload as originally requested/implied context might need it for auth state context updates if any.
+        // Actually best to just navigate if we rely on global state updates, but since I don't see context provider usage here, maybe reload is safer for now or just navigate. 
+        // Let's stick to navigate but if the app relies on reload to fetch user profile in App.js or similar, we might need to trigger that.
+        // The user originally had window.location.reload(). 
+        // Let's replace with navigate(0) or just navigate("/account") and reload. 
+        // Better:
+        // window.location.href = "/account"; // This does both navigate and reload
+      }, 1500);
+
     } catch (err) {
       console.error("Signup error:", err);
       const errorData = err?.response?.data;
@@ -146,8 +165,8 @@ function SignupForm() {
           disabled={loading}
           aria-label="Sign up button"
           className={`w-full py-3 rounded-lg font-semibold shadow-md transition duration-200 ${loading
-              ? "bg-gray-400 cursor-not-allowed"
-              : "bg-teal-600 hover:bg-teal-700 text-white"
+            ? "bg-gray-400 cursor-not-allowed"
+            : "bg-teal-600 hover:bg-teal-700 text-white"
             }`}
         >
           {loading ? "Signing up..." : "Sign Up"}
@@ -168,8 +187,11 @@ function SignupForm() {
               try {
                 const res = await googleSignin(credentialResponse.credential);
                 localStorage.setItem("token", res.data.token);
-                setSuccess("Google Signup successful! 🎉");
-                window.location.reload();
+                setSuccess("Google Signup successful! Redirecting... 🎉");
+                setTimeout(() => {
+                  navigate("/account");
+                  window.location.reload();
+                }, 1500);
               } catch (err) {
                 console.error(err);
                 setError("Google Signup Failed");

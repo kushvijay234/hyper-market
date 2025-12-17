@@ -22,21 +22,27 @@ router.post("/signup", validateUserInput, async (req, res) => {
       role: req.body.role,
     });
     await user.save();
+    let emailSent = false;
     try {
       await sendEmail(
         email,
         "Welcome to Our App 🎉",
         `Hello,\n\nYour account has been created successfully.\n\nThank you for registering!`
       );
+      emailSent = true;
     } catch (emailErr) {
       console.error("Email sending failed:", emailErr.message);
+      // emailSent remains false
     }
 
     // generate JWT token
     const token = generateToken(user);
 
     return res.status(201).json({
-      message: "User signed up successfully and Email sent",
+      message: emailSent
+        ? "User signed up successfully and Email sent"
+        : "User signed up successfully but Email failed to send",
+      emailSent,
       token,
       user: {
         id: user._id,
