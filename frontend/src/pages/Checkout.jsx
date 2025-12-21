@@ -52,8 +52,8 @@ const Checkout = () => {
       const fetchIntent = async () => {
         try {
           // Prepare products array (needs productId/id)
-          const products = cart.map(item => ({ productId: item.id, quantity: item.quantity }));
-          const res = await createPaymentIntent(products, token);
+          const products = cart.map(item => ({ productId: item._id, quantity: item.quantity }));
+          const res = await createPaymentIntent(cart, token);
           setClientSecret(res.clientSecret);
         } catch (err) {
           console.error("Failed to create payment intent:", err);
@@ -78,7 +78,7 @@ const Checkout = () => {
 
     const orderData = {
       products: cart.map((item) => ({
-        productId: item.id,
+        productId: item._id,
         name: item.title,
         price: item.price,
         quantity: item.quantity,
@@ -219,7 +219,7 @@ const Checkout = () => {
                   <CheckoutForm
                     orderData={{
                       products: cart.map((item) => ({
-                        productId: item.id,
+                        productId: item._id,
                         name: item.title,
                         price: item.price,
                         quantity: item.quantity,

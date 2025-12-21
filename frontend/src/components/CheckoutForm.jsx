@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { clearCart } from "../redux/CartSlice";
 import { placeOrder } from "../api/orderApi";
 
+
 const CheckoutForm = ({ orderData, token, user }) => {
     const stripe = useStripe();
     const elements = useElements();
