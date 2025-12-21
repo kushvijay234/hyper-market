@@ -28,13 +28,25 @@ export const getUserOrders = async (token) => {
   }
 };
 // Create Payment Intent
-export const createPaymentIntent = async (products, token) => {
+export const createPaymentIntent = async (cart, token) => {
   try {
-    const res = await axios.post(`${baseURL}/api/orders/create-payment-intent`, { products }, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    const products = cart.map(item => ({
+      productId: item._id,
+      quantity: item.quantity,
+    }));
+
+    const res = await axios.post(
+      `${BASE_URL}/create-payment-intent`,
+      { products },
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
+
     return res.data;
   } catch (err) {
-    throw err.response ? err.response.data : { message: "Network error" };
+    throw err.response
+      ? err.response.data
+      : { message: "Network error while creating payment intent" };
   }
 };
+
+
