@@ -12,9 +12,10 @@ const Orders = () => {
         if (!token) {
           throw new Error("No token found, please login again.");
         }
-
         const data = await getUserOrders(token);
-        setOrders(data);
+        // Sort orders by createdAt in descending order, To sort the orders by date with the most recent (today) on top,
+        const sortedOrders = data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+        setOrders(sortedOrders);
       } catch (error) {
         console.error("Error fetching orders:", error);
       } finally {
